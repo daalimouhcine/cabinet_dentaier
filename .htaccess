@@ -1,0 +1,7 @@
+# Go directly to the Back folder.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteRule ^$Back/Config/Core.php [L]
+    RewriteRule (.*) Back/Config/$1 [L]
+</IfModule>
