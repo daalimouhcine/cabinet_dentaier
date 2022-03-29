@@ -24,4 +24,4 @@ CREATE TABLE IF NOT EXISTS appointments (
     FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
 ),
 
-CREATE VIEW patient_appointments AS SELECT appointments.id AS appointment_id, appointments.date_time, appointments.description , patients.* FROM appointments INNER JOIN patients ON appointments.patient_id = patients.id; 
+CREATE VIEW patient_appointments AS SELECT appointments.id AS appointment_id, appointments.date_time, appointments.description, appointments.patient_id, patients.user_name, patients.email, patients.first_name, patients.last_name, patients.birth_date, patients.gender FROM appointments INNER JOIN patients ON appointments.patient_id = patients.id; 
