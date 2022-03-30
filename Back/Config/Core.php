@@ -1,8 +1,8 @@
 <?php
 
-    class Core{
-        protected $currentApi = null;
-        protected $currentMethod = null;
+    class Core {
+        protected $currentApi = 'Errors';
+        protected $currentMethod = 'index';
         protected $apiParams = [];
 
         public function __construct() {
@@ -15,14 +15,15 @@
                     $this->currentApi = ucwords($url[0]);
                     //Unset 0 Index
                     unset($url[0]);
+
                 }
             } 
-
+            
             // Require the controller
-            require_once '../APIs/' . $this->currentApi . '.php';
-
-             // Instantiate controller class
-            $this->currentApi = new $this->currentApi;
+            require '../APIs/' . $this->currentApi . '.php';
+            
+            // Instantiate controller class
+           $this->currentApi = new $this->currentApi;
 
             // Check for second part of url
             if(!empty($url[1])) {
@@ -32,7 +33,7 @@
                     unset($url[1]);
                 }
             }
-
+            
             // Get params 
             $this->apiParams = $url ? array_values($url) : [];
 
@@ -40,7 +41,7 @@
             call_user_func_array([$this->currentApi, $this->currentMethod], $this->apiParams);
 
         }
-        
+
 
         public function getUrl() {
             if(isset($_GET['url'])) {
@@ -51,8 +52,11 @@
                 $url = array_filter($url);
                 return $url;
             }
-
+            
             
         }
     }
+    
+
+    new Core();
 ?>
