@@ -1,4 +1,4 @@
-# routing every thing trough index.php and making avery thing after domaine name stored in url GET super variable.
+# routing every thing trough Core.php and making avery thing after domaine name stored in url GET super variable.
 
 
 <IfModule mod_rewrite.c>
