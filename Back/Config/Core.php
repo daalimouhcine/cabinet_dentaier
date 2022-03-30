@@ -57,6 +57,6 @@
         }
     }
     
-
+    // Instantiate Core
     new Core();
 ?>
