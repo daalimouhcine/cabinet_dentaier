@@ -44,7 +44,7 @@
                     $type = PDO::PARAM_STR;
             }
 
-            $this->stmt->bind($param, $value, $type);
+            $this->stmt->bindParam($param, $value, $type);
         }
 
         public function execute() {
