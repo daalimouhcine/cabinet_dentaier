@@ -2,10 +2,10 @@
 const Inputs = (props) => {
     return (
         <div className="relative">
-            <label className="font-medium" htmlFor={props.for}></label>
+            <label className="font-medium" htmlFor={props.for}>{props.placeholder}</label>
             <input className="block w-full px-4 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50" type={props.type} name={props.name} id={props.id} placeholder={props.placeholder} />
             <span>{props.errorMessage}</span>
-        </div>     
+        </div>
     )
 }
 
@@ -21,7 +21,7 @@ const FormSignUp = () => {
                     <img src={require('../img/logo.png')} alt="logo" />
                     <h2>Sign Up</h2>
                 </div> */}
-                <h4>Sign Up</h4>
+                <h4 className="w-full text-3xl font-bold">Sign Up</h4>
                 <form action="" className="relative w-full mt-10 space-y-8">
                     <Inputs for="first_name" type="text" name="first_name" id="first_name" placeholder="First Name" errorMessage="" />
                     <Inputs for="last_name" type="text" name="last_name" id="last_name" placeholder="Last Name" errorMessage="" />
