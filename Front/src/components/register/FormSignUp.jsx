@@ -28,7 +28,7 @@ const FormSignUp = () => {
                     <Inputs for="email" type="email" name="email" id="email" placeholder="Email" errorMessage="" />
                     <Inputs for="birth_date" type="date" name="birth_date" id="birth_date" placeholder="Birth Date" errorMessage="" />
                     <Inputs for="gender" type="gender" name="gender" id="gender" placeholder="Gender" errorMessage="" />
-                    <button type="submit">Sign Up</button>
+                    <button type="submit" className="w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease">Sign Up</button>
                     <b className="text-lg text-gray-500">Already have an account? <a href="#_" className="text-blue-600 underline">Login</a></b>
                 </form>
             </div>
