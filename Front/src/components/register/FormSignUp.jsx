@@ -4,7 +4,7 @@ const Inputs = (props) => {
         <div className="relative">
             <label className="font-medium" htmlFor={props.for}>{props.placeholder}</label>
             <input className="block w-full px-4 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50" type={props.type} name={props.name} id={props.id} placeholder={props.placeholder} />
-            <span>{props.errorMessage}</span>
+            <span className="text-red-500">{props.errorMessage}</span>
         </div>
     )
 }
