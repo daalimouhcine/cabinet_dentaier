@@ -1,7 +1,16 @@
 import moment from 'moment';
+import axios from 'axios';
 
 export default function validateInfo(values) {
     let errors = {};
+
+    let userFound = false;
+
+    axios.get("http://localhost/cabinet_dentaire_brief-6/patients/getOne/" + values.email)
+    .then(response => {
+        userFound = response.data;
+    });
+
 
     if(!values.first_name.trim()) {
         errors.first_name = 'First name is required';
@@ -11,10 +20,13 @@ export default function validateInfo(values) {
         errors.last_name = 'Last name is required';
     }
 
+    
     if(!values.email.trim()) {
         errors.email = 'Email is required';
     } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address';
+    } else if (userFound) {
+        errors.email = 'Email already used';
     }
 
     if(!values.birth_date) {
