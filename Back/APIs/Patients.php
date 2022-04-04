@@ -18,6 +18,12 @@
             echo json_encode($this->patientModel->getAll());
         }
 
+
+        public function getOne($email) {
+            echo json_encode($this->patientModel->getOne($email));
+        }
+
+
         public function create() {
             // Get data from the request
             $patientData = [
