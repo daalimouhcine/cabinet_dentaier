@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import validate from "./validateInfo";
+import axios from 'axios';
 
 const useForm = (callback, validate) => {
     const [values, setValues] = useState({
@@ -31,7 +32,13 @@ const useForm = (callback, validate) => {
 
     useEffect( () => {
           if (Object.keys(errors).length === 0 && isSubmitting) {
-            callback();
+            axios.post('http://localhost/cabinet_dentaire_brief-6/patients/create', values).then(response => {
+                console.log(response);
+                callback();
+            })
+            .catch(error => {
+                console.log(error);
+            });
           }
         });
 
