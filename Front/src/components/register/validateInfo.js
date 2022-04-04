@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 export default function validateInfo(values) {
     let errors = {};
 
@@ -16,17 +17,19 @@ export default function validateInfo(values) {
         errors.email = 'Invalid email address';
     }
 
-    if(!values.birth_date.trim()) {
+    if(!values.birth_date) {
         errors.birth_date = 'Birth date is required';
-    } else if(!moment(values.birthday, 'YYYY-MM-DD', true).isValid()) {
+    } else if(!moment(values.birth_date, 'YYYY-MM-DD', true).isValid()) {
         errors.birth_date = 'Invalid birth date';
-    } else if(moment(values.birthday, 'YYYY-MM-DD', true).isAfter(moment())) {
+    } else if(moment(values.birth_date, 'YYYY-MM-DD', true).isAfter(moment())) {
         errors.birth_date = 'Birth date must be in the past';
     }
 
     if(!values.gender.trim()) {
         errors.gender = 'Gender is required';
     }
+
+    // console.log(values);
 
     return errors;
 }
