@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import validate from "./validateInfo";
 
-const useForm = (callBack, validate) => {
+const useForm = (callback, validate) => {
     const [values, setValues] = useState({
         first_name: "",
         last_name: "",
@@ -23,17 +23,18 @@ const useForm = (callBack, validate) => {
       };
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors(validate(values));
-    setIsSubmitting(true);
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrors(validate(values));
+        setIsSubmitting(true);
+    };
 
-    useEffect(() => {
-        if(Object.keys.errors === 0 && isSubmitting) {
-            callBack();
-        }
-    }, [errors]);
+
+    useEffect( () => {
+          if (Object.keys(errors).length === 0 && isSubmitting) {
+            callback();
+          }
+        }, [errors] );
 
 
   return { values, handleChange, handleSubmit, errors };
