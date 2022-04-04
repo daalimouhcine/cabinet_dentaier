@@ -14,6 +14,16 @@
             }
         }
 
+        public function getOne($email) {
+            $this->db->query('SELECT * FROM patients WHERE email = :email');
+            $this->db->bind(':email', $email);
+            if($this->db->single()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         public function createP($patientData) {
             // Insert into database
             $this->db->query('INSERT INTO patients (id, email, first_name, last_name, birth_date, gender) VALUES (:id, :email, :first_name, :last_name, :birth_date, :gender)');
