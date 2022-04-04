@@ -40,7 +40,5 @@ export default function validateInfo(values) {
         errors.gender = 'Gender is required';
     }
 
-    console.log(errors);
-
     return errors;
 }
