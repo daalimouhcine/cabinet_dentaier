@@ -1,11 +1,13 @@
 <?php
 
+    require_once '../helpers/sendEmail.php';
+
     // Set the API for patient to be called
-    header('Access-Control-Allow-Origin:*');
+    header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json ; charset=utf-8');
-    header("Access-Control-Allow-Methods:*"); 
+    header("Access-Control-Allow-Methods: *"); 
     header("Access-Control-Max-Age: 600");
-    header("Access-Control-Allow-Headers:*");
+    header("Access-Control-Allow-Headers: *");
 
     class Patients extends Controller {
 
@@ -26,17 +28,26 @@
 
         public function create() {
             // Get data from the request
+            $json = file_get_contents('php://input');
+            $patientData = json_decode($json, true);
             $patientData = [
                 'id' =>  uniqid('patient_'),
-                'email' => $_POST['email'],
-                'first_name' => $_POST['first_name'],
-                'last_name' => $_POST['last_name'],
-                'birth_date' => $_POST['birth_date'],
-                'gender' => $_POST['gender']
+                'email' => $patientData['email'],
+                'first_name' => $patientData['first_name'],
+                'last_name' => $patientData['last_name'],
+                'birth_date' => $patientData['birth_date'],
+                'gender' => $patientData['gender']
             ];
-            
-            $this->patientModel->createP($patientData);
-            
+            // Create patient
+            if($this->patientModel->createP($patientData)) {
+                echo json_encode(['id' => $patientData['id']]);
+                // Send email
+                sendEmail($patientData);
+
+            } else {
+                echo json_encode(['message' => 'Patient not created']);
+            }
+
         }
 
 
