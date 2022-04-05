@@ -12,7 +12,7 @@ const FormSignUp = ({submitForm}) => {
       <div>
         <img src="" alt="" srcSet="" />
       </div>
-      <div className="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24">
+      <div className="flex flex-col items-start justify-start w-full h-full p-5 lg:p-10 xl:p-10">
         {/* <div className="title-form">
                     <img src={require('../img/logo.png')} alt="logo" />
                     <h2>Sign Up</h2>
@@ -20,7 +20,7 @@ const FormSignUp = ({submitForm}) => {
         <h4 className="w-full text-3xl font-bold">Sign Up</h4>
         <form
           action=""
-          className="relative w-full mt-10 space-y-8"
+          className="relative w-full mt-7 space-y-5"
           onSubmit={handleSubmit}
         >
           <div className="relative">
@@ -82,7 +82,7 @@ const FormSignUp = ({submitForm}) => {
               Birth Date
             </label>
             <input
-              className="block w-full px-4 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50"
+              className="block w-full px-2 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50"
               type="date"
               name="birth_date"
               id="birth_date"
@@ -106,7 +106,7 @@ const FormSignUp = ({submitForm}) => {
             >
               <option value=""></option>
               <option value="Male">Male</option>
-              <option value="Male">Female</option>
+              <option value="Female">Female</option>
             </select>
             <span className="text-red-500">{errors.gender}</span>
           </div>
