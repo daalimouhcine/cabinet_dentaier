@@ -32,13 +32,7 @@ const useForm = (callback, validate) => {
 
     useEffect( () => {
           if (Object.keys(errors).length === 0 && isSubmitting) {
-            axios.post('http://localhost/cabinet_dentaire_brief-6/patients/create', values).then(response => {
-                console.log(response);
-                callback();
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            callback();
           }
         });
 
