@@ -40,5 +40,15 @@ export default function validateInfo(values) {
         errors.gender = 'Gender is required';
     }
 
+    if (Object.keys(errors).length === 0) {
+        axios.post('http://localhost/cabinet_dentaire_brief-6/patients/create', values).then(response => {
+            console.log(values);
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
     return errors;
 }
