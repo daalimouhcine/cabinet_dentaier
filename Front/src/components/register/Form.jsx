@@ -12,7 +12,7 @@ const Form = () => {
     return (
         <div className="mx-auto max-w-7xl">
             <div className="flex flex-col lg:flex-row">
-                <div className="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
+                <div className="relative w-full xl:min-h-screen bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-blue-100">
                     <div className="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0">
                         <div className="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
                             <div className="relative">
