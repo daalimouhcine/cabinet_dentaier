@@ -14,13 +14,23 @@
             }
         }
 
-        public function getOne($email) {
-            $this->db->query('SELECT * FROM patients WHERE email = :email');
+        public function getOne($email, $id) {
+            $this->db->query('SELECT * FROM patients WHERE email = :email OR id = :id');
             $this->db->bind(':email', $email);
-            if($this->db->single()) {
-                return true;
-            } else {
-                return false;
+            $this->db->bind(':id', $id);
+
+            if(!empty($email) && empty($id)) {
+                if($this->db->single()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if(empty($email) && !empty($id)) {
+                if($this->db->execute()) {
+                    return $this->db->single();
+                } else {
+                    return 'false';
+                }
             }
         }
 
