@@ -1,5 +1,5 @@
 
-const FormSuccess = () => {
+const Success = () => {
     return (
         <div className="w-fit flex flex-col justify-center mx-auto text-center">
             <p className="font-bold pt-2 text-gray-700">The inscription is done successfully</p>
@@ -11,4 +11,4 @@ const FormSuccess = () => {
     )
 }
 
-export default FormSuccess;
+export default Success;

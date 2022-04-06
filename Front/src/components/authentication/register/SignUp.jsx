@@ -2,7 +2,7 @@ import useForm from "./useForm";
 import validate from './validateInfo';
 
 
-const FormSignUp = ({submitForm}) => {
+const SignUp = ({submitForm}) => {
 
   const { values, handleChange, handleSubmit, errors } = useForm(submitForm, validate);
 
@@ -128,4 +128,4 @@ const FormSignUp = ({submitForm}) => {
   );
 };
 
-export default FormSignUp;
+export default SignUp;

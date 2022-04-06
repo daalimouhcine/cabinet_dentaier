@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import FormSignUp from "./FormSignUp";
-import FormSuccess from "./FormSuccess";
+import SignUp from "./SignUp";
+import Success from "./Success";
 
-const Form = () => {
+const Register = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     function submitForm() {
@@ -24,10 +24,10 @@ const Form = () => {
                         </div>
                     </div>
                 </div>
-                {!isSubmitted ? <FormSignUp submitForm={submitForm} /> : <FormSuccess />}
+                {!isSubmitted ? <SignUp submitForm={submitForm} /> : <Success />}
             </div>
         </div>
     )
 }
 
-export default Form;
+export default Register;
