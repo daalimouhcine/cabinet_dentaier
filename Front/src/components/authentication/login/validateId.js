@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export default function validateId(id) {
     let error = '';
-    let user = true;
 
     if (!id.trim()) {
         error = 'ID is required';
@@ -16,13 +15,10 @@ export default function validateId(id) {
     } else {
         axios.get('http://localhost/cabinet_dentaire_brief-6/patients/getOne/' + id)
         .then(response => {
-            if(response.data) {
+            if(!response.data) {
+                error = 'ID is not correct';
                 console.log(response.data);
-                user = true;
-            } else {
-                user = false;
-                console.log(user);
-            }
+            } 
         });
     }
 
