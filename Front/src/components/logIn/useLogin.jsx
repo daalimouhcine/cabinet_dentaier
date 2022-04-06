@@ -1,7 +1,8 @@
 import {useState} from 'react';
 
-const useLogin = () => {
+const useLogin = validate => {
     const [currentId, setCurrentId] = useState('');
+    const [error, setError] = useState('');
 
     const handleChange = event => {
         setCurrentId(event.target.value);
@@ -9,10 +10,10 @@ const useLogin = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(currentId);
+        setError(validate(currentId));
     }
 
-    return {currentId, handleChange, handleSubmit};
+    return {currentId, handleChange, handleSubmit, error};
 };
 
 export default useLogin;
