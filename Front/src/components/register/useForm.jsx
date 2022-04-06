@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import validate from "./validateInfo";
 
 const useForm = (callback, validate) => {
     const [values, setValues] = useState({
