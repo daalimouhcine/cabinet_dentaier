@@ -1,8 +1,19 @@
-import useLogin from "./useLogin";
+import {useState} from 'react';
 import validate from "./validateId";
 
 const LogIn = () => {
-  const { currentId, handleChange, handleSubmit, error } = useLogin(validate);
+
+  const [currentId, setCurrentId] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = event => {
+      setCurrentId(event.target.value);
+  }
+
+  const handleSubmit = event => {
+      event.preventDefault();
+      setError(validate(currentId));
+  }
 
   return (
     <div className="w-full h-screen flex justify-center bg-slate-300">
