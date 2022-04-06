@@ -21,8 +21,15 @@
         }
 
 
-        public function getOne($email) {
-            echo json_encode($this->patientModel->getOne($email));
+        public function getOne($data) {
+            // Check if data contain 'patient_'
+            if(str_contains($data, 'patient_')) {
+                echo json_encode($this->patientModel->getOne('', $data));
+                // echo json_encode($data);
+            } else {
+                echo json_encode($this->patientModel->getOne($data, ''));
+            }
+
         }
 
 
