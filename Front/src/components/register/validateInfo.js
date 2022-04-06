@@ -8,6 +8,7 @@ export default function validateInfo(values) {
         errors.first_name = 'First name is required';
     }
     
+    
     if(!values.last_name.trim()) {
         errors.last_name = 'Last name is required';
     }
@@ -24,7 +25,6 @@ export default function validateInfo(values) {
                 errors.email = 'Email already exists';
             }
         });
-
     }
 
     
@@ -36,9 +36,11 @@ export default function validateInfo(values) {
         errors.birth_date = 'Birth date must be in the past';
     } 
 
+
     if(!values.gender.trim()) {
         errors.gender = 'Gender is required';
     }
+
 
     if (Object.keys(errors).length === 0) {
         axios.post('http://localhost/cabinet_dentaire_brief-6/patients/create', values).then(response => {
