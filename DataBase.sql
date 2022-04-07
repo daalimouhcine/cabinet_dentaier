@@ -18,9 +18,10 @@ CREATE TABLE IF NOT EXISTS patients (
 CREATE TABLE IF NOT EXISTS appointments (
     id INT PRIMARY KEY AUTO_INCREMENT,
     patient_id VARCHAR(255) NOT NULL,
-    date_time DATETIME NOT NULL,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
     description VARCHAR(255) NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE VIEW patient_appointments AS SELECT appointments.id AS appointment_id, appointments.date_time, appointments.description, appointments.patient_id, patients.email, patients.first_name, patients.last_name, patients.birth_date, patients.gender FROM appointments INNER JOIN patients ON appointments.patient_id = patients.id; 
+CREATE VIEW patient_appointments AS SELECT appointments.id AS appointment_id, appointments.date, appointments.time, appointments.description, appointments.patient_id, patients.email, patients.first_name, patients.last_name, patients.birth_date, patients.gender FROM appointments INNER JOIN patients ON appointments.patient_id = patients.id; 
