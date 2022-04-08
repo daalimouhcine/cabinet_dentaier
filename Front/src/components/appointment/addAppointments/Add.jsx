@@ -1,3 +1,4 @@
+import Nav from '../Nav';
 import { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -90,111 +91,114 @@ const Add = () => {
 
 
   return (
-    <div className="mt-5">
-      <div className="flex justify-center">
-        <div className="w-3/5">
-          <form
-            id="popRdv"
-            className="flex flex-col bg-white p-10 rounded-lg shadow-lg min-w-full"
-            onSubmit={onSubmit}
-          >
-            <h1 className="text-center text-2xl mb-6 text-gray-600 font-bold font-sans">
-              Make an appointment
-            </h1>
-            <div className="mb-5">
-              <label
-                className="text-left text-gray-800 font-semibold block my-3"
-                htmlFor="topic"
-              >
-                Description:
-              </label>
-              <input
-                className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-                type="text"
-                name="description"
-                id="description"
-                placeholder="Description"
-                onChange={handleChange}
-                value={appointment.description}
-              />
-              {errors.description && (
-                <p className="text-red-500 text-xs italic">
-                  {errors.description}
-                </p>
-              )}
-            </div>
-            <div className="mb-5">
-              <label
-                className="text-left text-gray-800 font-semibold block my-3 text-md"
-                htmlFor="date"
-              >
-                Date:
-              </label>
-              <input
-                className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-                type="date"
-                id="date"
-                name="date"
-                onChange={handleChange}
-                value={appointment.date}
-              />
-              {errors.date && (
-                <p className="text-red-500 text-xs italic">{errors.date}</p>
-              )}
-            </div>
-
-            {isTime ? (
-              <div className="mb-7">
+    <>
+      <Nav />
+      <div className="mt-5">
+        <div className="flex justify-center">
+          <div className="w-3/5">
+            <form
+              id="popRdv"
+              className="flex flex-col bg-white p-10 rounded-lg shadow-lg min-w-full"
+              onSubmit={onSubmit}
+            >
+              <h1 className="text-center text-2xl mb-6 text-gray-600 font-bold font-sans">
+                Make an appointment
+              </h1>
+              <div className="mb-5">
                 <label
-                  className="text-left text-gray-800 font-semibold block my-3 text-md"
-                  htmlFor="time"
+                  className="text-left text-gray-800 font-semibold block my-3"
+                  htmlFor="topic"
                 >
-                  Time:
+                  Description:
                 </label>
-                <select
-                  className="select select-bordered w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-                  id="time"
-                  name="time"
+                <input
+                  className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+                  type="text"
+                  name="description"
+                  id="description"
+                  placeholder="Description"
                   onChange={handleChange}
-                  value={appointment.time}
-                >
-                  {
-                    times.map((item) => {
-                      if (invalidTime.includes(item)) {
-                        return (
-                          <option disabled key={item} value={item}>
-                              {item}
-                            </option>
-                        )
-                      } else {
-                        return (
-                          <option key={item} value={item}>
-                            {item}
-                          </option>
-                        );
-                      }
-                    })
-                  }
-
-                </select>
-                {errors.time && (
-                  <p className="text-red-500 text-xs italic">{errors.time}</p>
+                  value={appointment.description}
+                />
+                {errors.description && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.description}
+                  </p>
                 )}
               </div>
-            ) : (
-              " "
-            )}
+              <div className="mb-5">
+                <label
+                  className="text-left text-gray-800 font-semibold block my-3 text-md"
+                  htmlFor="date"
+                >
+                  Date:
+                </label>
+                <input
+                  className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+                  type="date"
+                  id="date"
+                  name="date"
+                  onChange={handleChange}
+                  value={appointment.date}
+                />
+                {errors.date && (
+                  <p className="text-red-500 text-xs italic">{errors.date}</p>
+                )}
+              </div>
 
-            <button
-              type="submit"
-              className="py-3 px-5 mt-auto rounded-md text-white bg-sky-600 hover:bg-blue-300 hover:text-blue-900 transition-all justify-self-end"
-            >
-              Add
-            </button>
-          </form>
+              {isTime ? (
+                <div className="mb-7">
+                  <label
+                    className="text-left text-gray-800 font-semibold block my-3 text-md"
+                    htmlFor="time"
+                  >
+                    Time:
+                  </label>
+                  <select
+                    className="select select-bordered w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+                    id="time"
+                    name="time"
+                    onChange={handleChange}
+                    value={appointment.time}
+                  >
+                    {
+                      times.map((item) => {
+                        if (invalidTime.includes(item)) {
+                          return (
+                            <option disabled key={item} value={item}>
+                                {item}
+                              </option>
+                          )
+                        } else {
+                          return (
+                            <option key={item} value={item}>
+                              {item}
+                            </option>
+                          );
+                        }
+                      })
+                    }
+
+                  </select>
+                  {errors.time && (
+                    <p className="text-red-500 text-xs italic">{errors.time}</p>
+                  )}
+                </div>
+              ) : (
+                " "
+              )}
+
+              <button
+                type="submit"
+                className="py-3 px-5 mt-auto rounded-md text-white bg-sky-600 hover:bg-blue-300 hover:text-blue-900 transition-all justify-self-end"
+              >
+                Add
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
