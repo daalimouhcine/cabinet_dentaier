@@ -18,16 +18,16 @@
             echo json_encode($this->appointmentModel->getAll());
         }
  
+        // create appointment
         public function create() {
-            // Get data from the request
-            $patientData = [
-                'patient_id' => $_POST['patient_id'],
-                'date_time' => $_POST['date_time'],
-                'description' => $_POST['description']
-            ];
-            
-            $this->appointmentModel->createA($patientData);
-            
+            // get the data from the POST
+            $data = json_decode(file_get_contents('php://input'), true);
+            // create the appointment
+            if($this->appointmentModel->createA($data)) {
+                echo json_encode(['message' => 'Appointment created']);
+            } else {
+                echo json_encode(['message' => 'Appointment not created']);
+            }
         }
 
         public function getByIdOrDate( $data = '' ) {
