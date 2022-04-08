@@ -30,6 +30,14 @@
             
         }
 
+        public function getByIdOrDate( $data = '' ) {
+            if(empty($data)) {
+                echo json_encode(['error' => 'No data provided']);
+            } else if(str_contains($data, 'patient_')) {
+                echo json_encode($this->appointmentModel->getByIdOrDate($data, ''));
+            } else {
+                echo json_encode($this->appointmentModel->getByIdOrDate('', $data));
+            }    
+        }
 
-
-    }
+}
