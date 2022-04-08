@@ -19,23 +19,30 @@
             }
         }
 
-        public function createA($appointmentData) {
-            // Insert into database
-            $this->db->query('INSERT INTO appointments (patient_id, date_time, description) VALUES (:patient_id, :date_time, :description)');
-            // Bind params
-            $this->db->bind(':patient_id', $appointmentData['patient_id']);
-            $this->db->bind(':date_time', $appointmentData['date_time']);
-            $this->db->bind(':description', $appointmentData['description']);
-
-
-            // Execute the query
+        // create appointment
+        public function createA($data) {
+            $this->db->query('SELECT time FROM appointments WHERE time = :time and date = :date');
+            $this->db->bind(':time', $data['time']);
+            $this->db->bind(':date', $data['date']);
             if($this->db->execute()) {
-                return true;
-            } else {
-                return false;
+                if($this->db->rowCount() > 0) {
+                    return false;
+                } else {
+                    $this->db->query('INSERT INTO appointments (patient_id, date, time, description) VALUES (:patient_id, :date, :time, :description)');
+                    $this->db->bind(':patient_id', $data['patient_id']);
+                    $this->db->bind(':date', $data['date']);
+                    $this->db->bind(':time', $data['time']);
+                    $this->db->bind(':description', $data['description']);
+                    if($this->db->execute()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
             }
         }
-
+        
+        
         public function getByIdOrDate($id = null, $date = null) {
             if($id != null) {
                 $this->db->query('SELECT * FROM patient_appointments WHERE patient_id = :id');
