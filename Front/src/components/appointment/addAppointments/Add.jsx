@@ -2,8 +2,10 @@ import Nav from '../Nav';
 import { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Add = () => {
+  const navigate = useNavigate();
   const times = [
     "",
     "09:00:00",
@@ -16,16 +18,15 @@ const Add = () => {
     "17:00:00",
     "18:00:00"
   ];
-  const [invalidTime, setInvalidTime] = useState([]);
 
+  const [invalidTime, setInvalidTime] = useState([]);
   const [appointment, setAppointment] = useState({
+    patient_id: localStorage.getItem("currentId"),
     description: "",
     date: "",
     time: "",
   });
-
   const [errors, setErrors] = useState({});
-
   const [isTime, setIsTime] = useState(false);
 
   const validate = (data) => {
@@ -39,9 +40,8 @@ const Add = () => {
     if (!data.date) {
       errors.date = "Date is required";
       errors.isValid = false;
-    } else if (moment(data.date).isBefore(moment())) {
-      errors.date = "Date must be in the future";
-      errors.isValid = false;
+    } else if (appointment.date < moment().format("YYYY-MM-DD")) {
+      errors.date = "Date must be today or later";
     }
 
     if (!data.time) {
@@ -51,6 +51,7 @@ const Add = () => {
 
     return errors;
   };
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,6 +64,17 @@ const Add = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     setErrors(validate(appointment));
+    if(Object.keys(errors).length === 0) {
+      axios.post("http://localhost/cabinet_dentaire_brief-6/appointments/create", appointment)
+      .then(response => {
+        if (response.data.message === "Appointment created") {
+          console.log(response.data.message);
+          navigate("/read");
+        }
+      })
+    } else {
+      console.log('errors');
+    }
   };
 
   const resp = async () => {
@@ -78,13 +90,16 @@ const Add = () => {
   };
 
   useEffect(() => {
-    if (moment(appointment.date, "YYYY-MM-DD", true).isValid() && !moment(appointment.date).isBefore(moment())) {
+     if ( moment(appointment.date, "YYYY-MM-DD", true).day() === 6 || moment(appointment.date, "YYYY-MM-DD", true).day() === 0) {
+      setIsTime(false);
+      errors.date = "You can't book an appointment on weekends";
+    } else if (moment(appointment.date, "YYYY-MM-DD", true).isValid() && appointment.date >= moment().format("YYYY-MM-DD")) {
       setIsTime(true);
       errors.date = "";
       resp();
     } else {
       setIsTime(false);
-      errors.date = "Date must be in the future";
+      errors.date = "Date must be today or later";
     }
   }, [appointment.date]);
 
@@ -164,6 +179,12 @@ const Add = () => {
                     {
                       times.map((item) => {
                         if (invalidTime.includes(item)) {
+                          return (
+                            <option disabled key={item} value={item}>
+                                {item}
+                              </option>
+                          )
+                        } else if(appointment.date === moment().format("YYYY-MM-DD") && item < moment().format("HH:mm:ss")) {
                           return (
                             <option disabled key={item} value={item}>
                                 {item}
