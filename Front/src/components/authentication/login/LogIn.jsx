@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 const LogIn = () => {
   const [currentId, setCurrentId] = useState("");
   const [error, setError] = useState("");
@@ -20,7 +19,6 @@ const LogIn = () => {
             setError("No User with this ID");
           } else {
             localStorage.setItem("currentId", currentId);
-            // navigate("/");
             window.location.reload(false);
           }
         });
@@ -31,8 +29,6 @@ const LogIn = () => {
     event.preventDefault();
     setCurrentId(event.target.value);
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
