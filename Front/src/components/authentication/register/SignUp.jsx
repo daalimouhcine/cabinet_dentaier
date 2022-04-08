@@ -13,10 +13,6 @@ const SignUp = ({submitForm}) => {
         <img src="" alt="" srcSet="" />
       </div>
       <div className="flex flex-col items-start justify-start w-full h-full p-5 lg:p-10 xl:p-10">
-        {/* <div className="title-form">
-                    <img src={require('../img/logo.png')} alt="logo" />
-                    <h2>Sign Up</h2>
-                </div> */}
         <h4 className="w-full text-3xl font-bold">Sign Up</h4>
         <form
           action=""
@@ -37,7 +33,7 @@ const SignUp = ({submitForm}) => {
               onChange={handleChange}
             />
             {errors.first_name && (
-              <span className="text-red-500">{errors.first_name}</span>
+              <span className="text-red-500 text-xs italic">{errors.first_name}</span>
             )}
           </div>
 
@@ -55,7 +51,7 @@ const SignUp = ({submitForm}) => {
               onChange={handleChange}
             />
             {errors.last_name && (
-              <span className="text-red-500">{errors.last_name}</span>
+              <span className="text-red-500 text-xs italic">{errors.last_name}</span>
             )}
           </div>
 
@@ -73,7 +69,7 @@ const SignUp = ({submitForm}) => {
               onChange={handleChange}
             />
             {errors.email && (
-              <span className="text-red-500">{errors.email}</span>
+              <span className="text-red-500 text-xs italic">{errors.email}</span>
             )}
           </div>
 
@@ -91,7 +87,7 @@ const SignUp = ({submitForm}) => {
               onChange={handleChange}
             />
             {errors.birth_date && (
-              <span className="text-red-500">{errors.birth_date}</span>
+              <span className="text-red-500 text-xs italic">{errors.birth_date}</span>
             )}
           </div>
 
@@ -104,7 +100,7 @@ const SignUp = ({submitForm}) => {
               onChange={handleChange}
               value={values.gender}
             >
-              <option value=""></option>
+              <option  >Chose...</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -118,7 +114,7 @@ const SignUp = ({submitForm}) => {
           </button>
           <b className="text-lg text-gray-500">
             Already have an account?{" "}
-            <a href="#_" className="text-blue-600 underline">
+            <a href="/" className="text-blue-600 underline">
               Login
             </a>
           </b>
