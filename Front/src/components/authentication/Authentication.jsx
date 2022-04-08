@@ -1,11 +1,11 @@
-import LogIn from './login/LogIn';
-// import Register from './register/Register';
+// import LogIn from './login/LogIn';
+import Register from './register/Register';
 
 const Authentication = () => {
     return (
         <div className='w-full min-h-screen bg-white'>
-            {/* <Register /> */}
-            <LogIn />
+            <Register />
+            {/* <LogIn /> */}
         </div>
     )
 }
