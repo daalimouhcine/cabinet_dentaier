@@ -36,7 +36,21 @@
             }
         }
 
+        public function getByIdOrDate($id = null, $date = null) {
+            if($id != null) {
+                $this->db->query('SELECT * FROM patient_appointments WHERE patient_id = :id');
+                $this->db->bind(':id', $id);
+            } else if($date != null) {
+                $this->db->query('SELECT time FROM patient_appointments WHERE date = :date');
+                $this->db->bind(':date', $date);
+            } else {
+                return false;
+            }
 
-
-        
+            if($this->db->execute()) {
+                return $this->db->resultSet();
+            } else {
+                return false;
+            }        
+        }
     }
