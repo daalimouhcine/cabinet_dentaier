@@ -21,7 +21,7 @@ const LogIn = () => {
         className="flex flex-col xl:w-4/6 lg:w-3/5 md:w-3/6 p-4 my-auto text-center rounded-md"
         onSubmit={handleSubmit}
       >
-        {error && <span className="text-red-500">{error}</span>}
+        {error && <span className="text-red-500 text-xs italic">{error}</span>}
         <input
           className="block w-full p-4 mt-2 text-xl placeholder-gray-400 gb-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50"
           type="text"
@@ -39,7 +39,7 @@ const LogIn = () => {
         </button>
         <b className="text-lg text-gray-500 mt-2">
             No account?{" "}
-          <a href="#_" className="text-blue-600 underline">
+          <a href="/register" className="text-blue-600 underline">
             Register
           </a>
         </b>
