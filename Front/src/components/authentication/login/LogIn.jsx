@@ -1,19 +1,48 @@
-import {useState} from 'react';
-import validate from "./validateId";
-
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const LogIn = () => {
+  const [currentId, setCurrentId] = useState("");
+  const [error, setError] = useState("");
 
-  const [currentId, setCurrentId] = useState('');
-  const [error, setError] = useState('');
-
-  const handleChange = event => {
-      setCurrentId(event.target.value);
+  async function validateId(id) {
+    if (!id.trim()) {
+      setError("ID is required");
+    } else if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(id)) {
+      setError("You shod enter you ID not the email");
+    } else if (!id.startsWith("patient_")) {
+      setError("ID shod start with ( patient_ )");
+    } else {
+      await axios
+        .get(`http://localhost/cabinet_dentaire_brief-6/patients/getOne/${id}`)
+        .then((response) => {
+          if (!response.data) {
+            setError("No User with this ID");
+          } else {
+            localStorage.setItem("currentId", currentId);
+            // navigate("/");
+            window.location.reload(false);
+          }
+        });
+    }
   }
 
-  const handleSubmit = event => {
-      event.preventDefault();
-      setError(validate(currentId));
-  }
+  const handleChange = (event) => {
+    event.preventDefault();
+    setCurrentId(event.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    validateId(currentId);
+
+    // if (error === "") {
+    //   localStorage.setItem("currentId", currentId);
+    //   navigate("/");
+    // }
+  };
 
   return (
     <div className="w-full h-screen flex justify-center bg-slate-300">
@@ -38,7 +67,7 @@ const LogIn = () => {
           Log In
         </button>
         <b className="text-lg text-gray-500 mt-2">
-            No account?{" "}
+          No account?{" "}
           <a href="/register" className="text-blue-600 underline">
             Register
           </a>
