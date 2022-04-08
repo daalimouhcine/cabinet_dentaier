@@ -15,9 +15,9 @@ export default function validateId(id) {
     } else {
         axios.get('http://localhost/cabinet_dentaire_brief-6/patients/getOne/' + id)
         .then(response => {
+            console.log(response.data);
             if(!response.data) {
                 error = 'ID is not correct';
-                console.log(response.data);
             } 
         });
     }
@@ -25,3 +25,7 @@ export default function validateId(id) {
 
     return error;
 }
+
+
+
+  

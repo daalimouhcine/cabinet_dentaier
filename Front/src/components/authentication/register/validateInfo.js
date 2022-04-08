@@ -21,8 +21,8 @@ export default function validateInfo(values) {
     } else {
         axios.get("http://localhost/cabinet_dentaire_brief-6/patients/getOne/" + values.email)
         .then(response => {
+            console.log(response.data);
             if(response.data) {
-                console.log(response.data)
                 errors.email = 'Email already exists';
             }
         });
