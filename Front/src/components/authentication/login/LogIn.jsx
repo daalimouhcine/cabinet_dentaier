@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+
 const LogIn = () => {
   const [currentId, setCurrentId] = useState("");
   const [error, setError] = useState("");
@@ -34,10 +35,7 @@ const LogIn = () => {
     event.preventDefault();
     validateId(currentId);
 
-    // if (error === "") {
-    //   localStorage.setItem("currentId", currentId);
-    //   navigate("/");
-    // }
+
   };
 
   return (
