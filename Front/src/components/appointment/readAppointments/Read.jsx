@@ -1,11 +1,31 @@
-
 import Nav from '../Nav';
+import axios from 'axios';
+import {useState, useEffect} from 'react';
+
 
 const Read = () => {
+    const currentId = localStorage.getItem('currentId');
+    const [appointments, setAppointments] = useState([]);
+    const [appointment, setAppointment] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`http://localhost/cabinet_dentaire_brief-6/appointments/getAll/${currentId}`)
+        .then(res => {
+            if(res.data.length > 0){
+                setAppointments(res.data);
+                setIsLoading(false);
+            }
+        })
+        .catch(err => console.log(err));
+
+    }, []);
+
+
+
     return (
         <div className="">
             <Nav />
-
             <section className="container mx-auto p-6 font-mono">
             <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                 <div className="w-full overflow-x-auto">
@@ -29,26 +49,28 @@ const Read = () => {
                     </tr>
                     </thead>
                     <tbody className="bg-white">
-                    <tr v-for="rdv in list"  className="text-gray-700">
-                        <td className="px-4 py-3 border">
-                        <div className="flex items-center text-sm">
-                            <div>
-                            <p className="font-semibold text-black"></p>
-                            </div>
-                        </div>
-                        </td>
-                        <td className="px-4 py-3 text-md font-semibold border">
-                        
-                        </td>
 
-                        <td className="px-4 py-3 text-sm border"></td>
-                        <td className="px-4 py-3 text-sm border">
-                        <button className="text-[#FF0000]" >Delete</button>
-                        &nbsp;
-                        <button className="text-[#088F8F]">Edit</button>
-                        </td>
+                        {
+                            (appointments.length === 0) ? (<tr className='text-center bg-red-200'><td>No appointments </td></tr>) : appointments.map(appointment => {
+                                return (
+                                    <tr key={appointment.id}>
+                                        <td className="px-4 py-3">{appointment.description}</td>
+                                        <td className="px-4 py-3">{appointment.date}</td>
+                                        <td className="px-4 py-3">{appointment.time}</td>
+                                        <td className="px-4 py-3">
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded-md">
+                                                <a href='#_'>Update</a>
+                                            </button>
+                                            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded-md">
+                                            <a href='#_'>Delete</a>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    )
+                                })
+                            }
 
-                    </tr>
+                    
                     </tbody>
                 </table>
                 </div>
@@ -59,3 +81,9 @@ const Read = () => {
 }
 
 export default Read;
+
+
+
+
+
+
