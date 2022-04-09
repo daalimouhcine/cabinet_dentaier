@@ -10,13 +10,12 @@
             $this->db = new Database();
         }
 
-        public function getAll() {
-            $this->db->query('SELECT * FROM appointments');
-            if($this->db->execute()) {
-                return $this->db->resultSet();
-            } else {
-                return false;
-            }
+        // Get all appointments by patient id
+        public function getAll($patientId) {
+            $this->db->query('SELECT * FROM patient_appointments WHERE patient_id = :patient_id');
+            $this->db->bind(':patient_id', $patientId);
+            $results = $this->db->resultSet();
+            return $results;
         }
 
         // create appointment
