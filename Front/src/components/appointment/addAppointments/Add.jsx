@@ -178,13 +178,7 @@ const Add = () => {
                   >
                     {
                       times.map((item) => {
-                        if (invalidTime.includes(item)) {
-                          return (
-                            <option disabled key={item} value={item}>
-                                {item}
-                              </option>
-                          )
-                        } else if(appointment.date === moment().format("YYYY-MM-DD") && item < moment().format("HH:mm:ss")) {
+                        if (invalidTime.includes(item) || (appointment.date === moment().format("YYYY-MM-DD") && item < moment().format("HH:mm:ss"))) {
                           return (
                             <option disabled key={item} value={item}>
                                 {item}
