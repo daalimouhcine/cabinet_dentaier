@@ -14,8 +14,14 @@
         }
 
 
-        public function getAll() {
-            echo json_encode($this->appointmentModel->getAll());
+        // Get all appointments by patient id
+        public function getAll($patientId) {
+            $appointments = $this->appointmentModel->getAll($patientId);
+            if($appointments) {
+                echo json_encode($appointments);
+            } else {
+                echo json_encode(['message' => 'No appointments found']);
+            }
         }
  
         // create appointment
