@@ -59,4 +59,31 @@
                 return false;
             }        
         }
+
+
+        public function updateA($data) {
+            $this->db->query('UPDATE appointments SET date = :date, time = :time, description = :description WHERE id = :appointmentId');
+            $this->db->bind(':date', $data['date']);
+            $this->db->bind(':time', $data['time']);
+            $this->db->bind(':description', $data['description']);
+            $this->db->bind(':appointmentId', $data['appointmentId']);
+
+            if($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        public function deleteA($appointmentId, $patientId) {
+            $this->db->query('DELETE FROM appointments WHERE id = :appointment_id AND patient_id = :patient_id');
+            $this->db->bind(':appointment_id', $appointmentId);
+            $this->db->bind(':patient_id', $patientId);
+            if($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
