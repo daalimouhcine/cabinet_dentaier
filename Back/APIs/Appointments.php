@@ -46,4 +46,21 @@
             }    
         }
 
+        public function updateA() {
+            $data = json_decode(file_get_contents('php://input'), true);
+            if($this->appointmentModel->updateA($data)) {
+                echo json_encode(['message' => 'Appointment updated']);
+            } else {
+                echo json_encode(['message' => 'Appointment not updated']);
+            }
+        }
+
+        public function delete($appointmentId, $patientId) {
+            if($this->appointmentModel->deleteA($appointmentId, $patientId)) {
+                echo json_encode(['message' => 'Appointment deleted']);
+            } else {
+                echo json_encode(['message' => 'Appointment not deleted']);
+            }
+        }
+
 }
