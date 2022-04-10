@@ -1,4 +1,5 @@
 import Nav from '../Nav';
+import ModifyForm from './ModifyForm';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 
@@ -8,6 +9,7 @@ const Read = () => {
     const [appointments, setAppointments] = useState([]);
     const [appointment, setAppointment] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [callUpdate, setCallUpdate] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost/cabinet_dentaire_brief-6/appointments/getAll/${currentId}`)
@@ -19,12 +21,24 @@ const Read = () => {
         })
         .catch(err => console.log(err));
 
-    }, []);
+    }, [isLoading]);
 
+    const updateAppointment = appointmentUpdate => {
+        setAppointment(appointmentUpdate);
+        setCallUpdate(true);
+    }
 
+    const deleteAppointment = appointmentId => {
+        axios.get(`http://localhost/cabinet_dentaire_brief-6/appointments/delete/${appointmentId}/${currentId}`)
+        .then(response => {
+            console.log(response.data.message);
+            setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointmentId));
+        })
+    }
 
     return (
         <div className="">
+            {(callUpdate) && (<ModifyForm appointmentId={appointment.appointment_id} description={appointment.description} date={appointment.date} time={appointment.time} />)}
             <Nav />
             <section className="container mx-auto p-6 font-mono">
             <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -53,16 +67,16 @@ const Read = () => {
                         {
                             (appointments.length === 0) ? (<tr className='text-center bg-red-200'><td>No appointments </td></tr>) : appointments.map(appointment => {
                                 return (
-                                    <tr key={appointment.id}>
+                                    <tr key={appointment.date+appointment.time}>
                                         <td className="px-4 py-3">{appointment.description}</td>
                                         <td className="px-4 py-3">{appointment.date}</td>
                                         <td className="px-4 py-3">{appointment.time}</td>
                                         <td className="px-4 py-3">
-                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded-md">
-                                                <a href='#_'>Update</a>
+                                            <button onClick={() => {updateAppointment(appointment)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded-md">
+                                                Update
                                             </button>
-                                            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded-md">
-                                            <a href='#_'>Delete</a>
+                                            <button onClick={() => {deleteAppointment(appointment.appointment_id)}} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded-md">
+                                                Delete
                                             </button>
                                         </td>
                                     </tr>
