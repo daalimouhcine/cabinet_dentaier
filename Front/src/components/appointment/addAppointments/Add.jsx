@@ -34,18 +34,23 @@ const Add = () => {
 
     if (!data.description) {
       errors.description = "Description is required";
-      errors.isValid = false;
     }
 
     if (!data.date) {
       errors.date = "Date is required";
-      errors.isValid = false;
+
+    } else if ( moment(appointment.date, "YYYY-MM-DD", true).day() === 6 || moment(appointment.date, "YYYY-MM-DD", true).day() === 0) {
+      errors.date = "You can't book an appointment on weekends";
+      
     } else if (appointment.date < moment().format("YYYY-MM-DD")) {
       errors.date = "Date must be today or later";
     }
 
     if (!data.time) {
       errors.time = "Time is required";
+    }
+    
+    if(Object.keys(errors) > 0) {
       errors.isValid = false;
     }
 
@@ -72,9 +77,7 @@ const Add = () => {
           navigate("/read");
         }
       })
-    } else {
-      console.log('errors');
-    }
+    } 
   };
 
   const resp = async () => {
@@ -98,8 +101,13 @@ const Add = () => {
       errors.date = "";
       resp();
     } else {
-      setIsTime(false);
-      errors.date = "Date must be today or later";
+      if(appointment.date === '') {
+        setIsTime(false);
+      } else {
+        setIsTime(false);
+        console.log(errors)
+        errors.date = "Date must be today or later";
+      }
     }
   }, [appointment.date]);
 
