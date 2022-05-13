@@ -1,4 +1,4 @@
-import Nav from '../Nav';
+import Nav from "../Nav";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -16,7 +16,7 @@ const Add = () => {
     "15:00:00",
     "16:00:00",
     "17:00:00",
-    "18:00:00"
+    "18:00:00",
   ];
 
   const [invalidTime, setInvalidTime] = useState([]);
@@ -26,7 +26,9 @@ const Add = () => {
     date: "",
     time: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    isValid: true,
+  });
   const [isTime, setIsTime] = useState(false);
 
   const validate = (data) => {
@@ -38,10 +40,11 @@ const Add = () => {
 
     if (!data.date) {
       errors.date = "Date is required";
-
-    } else if ( moment(appointment.date, "YYYY-MM-DD", true).day() === 6 || moment(appointment.date, "YYYY-MM-DD", true).day() === 0) {
+    } else if (
+      moment(appointment.date, "YYYY-MM-DD", true).day() === 6 ||
+      moment(appointment.date, "YYYY-MM-DD", true).day() === 0
+    ) {
       errors.date = "You can't book an appointment on weekends";
-      
     } else if (appointment.date < moment().format("YYYY-MM-DD")) {
       errors.date = "Date must be today or later";
     }
@@ -49,14 +52,9 @@ const Add = () => {
     if (!data.time) {
       errors.time = "Time is required";
     }
-    
-    if(Object.keys(errors) > 0) {
-      errors.isValid = false;
-    }
 
     return errors;
   };
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -66,24 +64,39 @@ const Add = () => {
     });
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
     setErrors(validate(appointment));
-    if(Object.keys(errors).length === 0) {
-      axios.post("http://localhost/cabinet_dentaire_brief-6/appointments/create", appointment)
-      .then(response => {
-        if (response.data.message === "Appointment created") {
-          console.log(response.data.message);
-          navigate("/read");
-        }
-      })
-    } 
+  }, [appointment]);
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    await console.log(Object.values(errors).length);
+    if (Object.values(errors).length === 0) {
+      await axios
+        .post(
+          "http://localhost/cabinet_dentaire_brief-6/appointments/create",
+          appointment
+        )
+        .then((response) => {
+          if (response.data.message === "Appointment created") {
+            console.log(response.data.message);
+            navigate("/read");
+          }
+        });
+    }
   };
 
   const resp = async () => {
     let arrayTime = [];
-    await axios.get(
-        "http://localhost/cabinet_dentaire_brief-6/appointments/getByIdOrDate/" + appointment.date)
+    await axios
+      .get(
+        "http://localhost/cabinet_dentaire_brief-6/appointments/getByIdOrDate/" +
+          appointment.date
+      )
       .then((response) => {
         response.data.map((item) => {
           return arrayTime.push(item.time);
@@ -93,25 +106,29 @@ const Add = () => {
   };
 
   useEffect(() => {
-     if ( moment(appointment.date, "YYYY-MM-DD", true).day() === 6 || moment(appointment.date, "YYYY-MM-DD", true).day() === 0) {
+    if (
+      moment(appointment.date, "YYYY-MM-DD", true).day() === 6 ||
+      moment(appointment.date, "YYYY-MM-DD", true).day() === 0
+    ) {
       setIsTime(false);
       errors.date = "You can't book an appointment on weekends";
-    } else if (moment(appointment.date, "YYYY-MM-DD", true).isValid() && appointment.date >= moment().format("YYYY-MM-DD")) {
+    } else if (
+      moment(appointment.date, "YYYY-MM-DD", true).isValid() &&
+      appointment.date >= moment().format("YYYY-MM-DD")
+    ) {
       setIsTime(true);
       errors.date = "";
       resp();
     } else {
-      if(appointment.date === '') {
+      if (appointment.date === "") {
         setIsTime(false);
       } else {
         setIsTime(false);
-        console.log(errors)
+        console.log(errors);
         errors.date = "Date must be today or later";
       }
     }
   }, [appointment.date]);
-
-
 
   return (
     <>
@@ -184,24 +201,25 @@ const Add = () => {
                     onChange={handleChange}
                     value={appointment.time}
                   >
-                    {
-                      times.map((item) => {
-                        if (invalidTime.includes(item) || (appointment.date === moment().format("YYYY-MM-DD") && item < moment().format("HH:mm:ss"))) {
-                          return (
-                            <option disabled key={item} value={item}>
-                                {item}
-                              </option>
-                          )
-                        } else {
-                          return (
-                            <option key={item} value={item}>
-                              {item}
-                            </option>
-                          );
-                        }
-                      })
-                    }
-
+                    {times.map((item) => {
+                      if (
+                        invalidTime.includes(item) ||
+                        (appointment.date === moment().format("YYYY-MM-DD") &&
+                          item < moment().format("HH:mm:ss"))
+                      ) {
+                        return (
+                          <option disabled key={item} value={item}>
+                            {item}
+                          </option>
+                        );
+                      } else {
+                        return (
+                          <option key={item} value={item}>
+                            {item}
+                          </option>
+                        );
+                      }
+                    })}
                   </select>
                   {errors.time && (
                     <p className="text-red-500 text-xs italic">{errors.time}</p>
@@ -212,6 +230,7 @@ const Add = () => {
               )}
 
               <button
+                disabled={errors.isValid}
                 type="submit"
                 className="py-3 px-5 mt-auto rounded-md text-white bg-sky-600 hover:bg-blue-300 hover:text-blue-900 transition-all justify-self-end"
               >
