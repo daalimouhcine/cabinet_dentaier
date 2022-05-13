@@ -43,15 +43,6 @@ const Register = () => {
                   LogIn
                 </a>
               )}
-
-              {/* <PrimaryButton>
-                  <PrimaryButton onClick={() => alert('the best')}>
-                      The best
-                  </PrimaryButton>
-                  <PrimaryButton onClick={() => alert('the worst')} className='bg-red-500'>
-                      The worst
-                  </PrimaryButton>
-              </PrimaryButton> */}
             </div>
           </div>
         </div>
