@@ -35,8 +35,6 @@ const LogIn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     validateId(currentId);
-
-
   };
 
   return (
